@@ -5,40 +5,69 @@
 // * Remove a previously added person from the list
 // * Display the household list in the HTML as it is modified
 // * Serialize the household as JSON upon form submission as a fake trip to the server
-var household = {};
-var isValidSubmission;
+var household = [];
 
-function trim (str) {
-  return str.replace (/^\s+|\s+$/g, '');
+function displayErrorMessages(){
+  var newDiv = document.createElement("div");
+  var newContent = document.createTextNode("Required field");
+  newDiv.appendChild(newContent); //add the text node to the newly created div.
+
+  ageEl.insertBefore(newDiv);
 }
-//
-// function validateAddition(searchTerm){
-//   // remove "?age=" from beginning
-//
-//   var age = str.slice("?age=".length, str.length - 1)
-//
-//   isValidSubmission =
-// }
-function onSubmit (e){
+
+function addNewMemberToHousehold(){
+
+}
+
+function displayCurrentHousehold(){
+
+}
+
+function onAddBtnClick (e){
   e.preventDefault();
-  var age = document.getElementsByName("age")[0].value;
-  var rel = document.getElementsByName("rel")[0].value;
-  var smoker = document.getElementsByName("smoker")[0].value;
 
-  console.log(age, rel, smoker);
-  if(isValidSubmission)
-  console.log();
+  //add the new member to the household
+  var newMember = {
+    age: ageEl.value,
+    rel: relEl.value,
+    smoker: smokerEl.checked ? "true" : "false"
+  };
+  household.push(newMember);
 
-  //
-  // if(isValidSubmission){
-  //
-  // }
+  //clear household ol
+  while (householdListEl.firstChild) {
+    householdListEl.removeChild(householdListEl.firstChild);
+  }
+
+  //update household display
+  for(var i = 0; i < household.length ; i++){
+    var node = document.createElement("LI");
+    var textnode = document.createTextNode("Age: " + household[i].age + ", Rel: " + household[i].rel + ", Smoker: " + household[i].smoker );
+    node.appendChild(textnode);
+
+    householdListEl.appendChild(node);
+  }
+
+  // displayErrorMessages();
+
+  formEl.reset();
 
 }
+
+var householdListEl = document.getElementsByClassName("household")[0];
+
+var formEl = document.querySelector("form");
+var ageEl = document.getElementsByName("age")[0];
+var relEl = document.getElementsByName("rel")[0];
+var smokerEl = document.getElementsByName("smoker")[0];
+
+var ageValue = ageEl.value;
+var relValue = relEl.value;
+var smokerValue = smokerEl.value;
 
 var addBtnEl = document.getElementsByClassName('add')[0];
 var submitBtnEl = document.querySelector('button[type="submit"]');
 // var ageValue = document.getElementById("uniqueID").value;
 // var relationshipValue = document.getElementById("uniqueID").value;
 // var isSmokerValue = document.getElementById("uniqueID").value;
-addBtnEl.addEventListener("click", onSubmit);
+addBtnEl.addEventListener("click", onAddBtnClick);
