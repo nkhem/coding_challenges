@@ -26,7 +26,7 @@ function validateInput(){
 
 }
 
-function rerenderHousehold(){
+function displayHousehold(){
   //clear all li elements from household ol
   while (householdListEl.firstChild) {
     householdListEl.removeChild(householdListEl.firstChild);
@@ -34,11 +34,18 @@ function rerenderHousehold(){
 
   //update household display
   for(var i = 0; i < household.length ; i++){
-    var node = document.createElement("LI");
-    var textnode = document.createTextNode("Age: " + household[i].age + ", Rel: " + household[i].rel + ", Smoker: " + household[i].smoker );
-    node.appendChild(textnode);
+    var newHouseholdLi = document.createElement("LI");
+    var newLiTextNode = document.createTextNode("Age: " + household[i].age + ", Rel: " + household[i].rel + ", Smoker: " + household[i].smoker );
+    newHouseholdLi.appendChild(newLiTextNode);
 
-    householdListEl.appendChild(node);
+    var deleteBtnEl = document.createElement("BUTTON");
+    deleteBtnEl.innerHTML = "Delete";
+    deleteBtnEl.setAttribute("class", "delete");
+    deleteBtnEl.setAttribute("id", i);
+    deleteBtnEl.addEventListener("click", onDeleteBtnClick);
+    newHouseholdLi.appendChild(deleteBtnEl);
+
+    householdListEl.appendChild(newHouseholdLi);
   }
 }
 
@@ -75,12 +82,19 @@ function onAddBtnClick (e){
       rel: relEl.value,
       smoker: smokerEl.checked ? "true" : "false"
     });
-    rerenderHousehold();
+    displayHousehold();
     formEl.reset();
   } else {
     displayErrorMessages();
   }
 
+}
+
+//removes selected household member from household array and rerenders household ol
+function onDeleteBtnClick(e){
+  e.preventDefault();
+  household.splice(parseInt(e.target.id), 1);
+  displayHousehold();
 }
 
 var householdListEl = document.getElementsByClassName("household")[0];
@@ -99,6 +113,7 @@ var submitBtnEl = document.querySelector('button[type="submit"]');
 // var ageValue = document.getElementById("uniqueID").value;
 // var relationshipValue = document.getElementById("uniqueID").value;
 // var isSmokerValue = document.getElementById("uniqueID").value;
+addBtnEl.addEventListener("click", onAddBtnClick);
 addBtnEl.addEventListener("click", onAddBtnClick);
 
 //create a ul for error messages
