@@ -15,8 +15,10 @@ var relEl = document.getElementsByName("rel")[0];
 var smokerEl = document.getElementsByName("smoker")[0];
 var addBtnEl = document.getElementsByClassName('add')[0];
 var submitBtnEl = document.querySelector('button[type="submit"]');
+var debugEl = document.getElementsByClassName('debug')[0];
 
 addBtnEl.addEventListener("click", onAddBtnClick);
+submitBtnEl.addEventListener("click", onSubmit);
 
 //create a ul for error messages
 var errorsEl = document.createElement("UL");
@@ -52,6 +54,15 @@ function onDeleteBtnClick(e){
   e.preventDefault();
   household.splice(parseInt(e.target.id), 1);
   displayHousehold();
+}
+
+//package household data as JSON and send fake request to server
+function onSubmit(e){
+  e.preventDefault();
+
+  var data = JSON.stringify(household);
+  debugEl.innerHTML = data;
+  debugEl.style.display = 'block';
 }
 
 //populates errorMessages array with informative error messages
