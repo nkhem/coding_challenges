@@ -70,8 +70,8 @@ function validateInput(){
 
   if( ageEl.value === "" ){
     errorMessages.push("Age is required field");
-  } else if (!parseInt(ageEl.value) || parseInt(ageEl.value) < 0){
-    errorMessages.push("Invalid age input");
+  } else if (!ageEl.value.match("^[0-9]*$")){
+    errorMessages.push("Age input must be an integer greater than 0");
   }
 
   if( relEl.value === "" ){
