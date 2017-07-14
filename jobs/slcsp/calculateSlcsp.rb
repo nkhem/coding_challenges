@@ -5,9 +5,13 @@ require 'byebug'
 # slcsp_data = CSV.read("./slcsp.csv")
 
 slcsp_data = {} #key: zipcode, value: :rate
+slcsp_header_row = [] #key: zipcode, value: :rate
 CSV.foreach("./slcsp.csv") do |row|
-  next if row[0] == "zipcode"
-  slcsp_data[row[0]] = row[1]
+  if row[0] == "zipcode"
+    slcsp_header_row = row
+  else
+    slcsp_data[row[0]] = row[1]
+  end
 end
 
 zips_data = {} #key: zipcode, value: array of hash with keys of :state, :county_code, :name, :rate_area
@@ -34,15 +38,26 @@ CSV.foreach("./plans.csv", :headers => true, :header_converters => :symbol, :con
   end
 end
 
+slcsp_data.keys.each do |zipcode|
+  if(zips_data[zipcode.to_i])
+    # if all of the data from zips associated with zipcode shares the same state and rate_area
+    if(zips_data[zipcode.to_i].map{|x| x[:state]}.uniq.length == 1 &&
+      zips_data[zipcode.to_i].map{|x| x[:rate_area]}.uniq.length == 1)
+
+      state = zips_data[zipcode.to_i][0][:state]
+      rate_area = zips_data[zipcode.to_i][0][:rate_area]
+
+      if(plans_data[state] && plans_data[state][rate_area])
+        slcsp_data[zipcode] = plans_data[state][rate_area][1]
+      end
+    end
+  end
+
+end
+
 # slcsp_data[1..-1].each do |row|
 #   zipcode = row[0]
 #
-#   if(zips_data[zipcode] && zips_data[zipcode][:state] && zips_data[zipcode][:rate_area])
-#     state = zips_data[zipcode][:state]
-#     rate_area = zips_data[zipcode][:rate_area]
-#   else
-#     break
-#   end
 #
 #   if(plans_data[state] && plans_data[state][rate_area])
 #     row[1] = plans_data[state][rate_area][1]
@@ -50,18 +65,19 @@ end
 #     break
 #   end
 # end
-
+#
 # CSV.open("./slcsp.csv", "wb") do |csv|
-#   slcsp_data.each { |row| csv << row }
+#   csv << slcsp_header_row
+#   slcsp_data.keys.each { |key| csv << slcsp_data[key]}
 # end
 
 # p slcsp_data
 # p "---"
 # p plans_data["GA"][7]
 # p plans_data["WI"][14]
-p plans_data
+# p plans_data
 # p "---"
 # p zips_data
 # p "---"
 # slcsp_data = CSV.read("./slcsp.csv")
-# p slcsp_data
+p slcsp_data
