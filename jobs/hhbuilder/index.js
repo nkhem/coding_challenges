@@ -1,6 +1,3 @@
-// Househould Builder, by Nicole Hemenway
-// Submitted: 13 July 2017, in application for Front-End Software Developer position at Ad Hoc
-
 // This file adds the following features to the Household Builder application using only vanilla JavaScript:
   // * Validates data entry (age is required and > 0, relationship is required)
   // * Adds people to a growing household list
