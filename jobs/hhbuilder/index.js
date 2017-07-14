@@ -1,5 +1,5 @@
 // Househould Builder, by Nicole Hemenway
-// Submitted: 13 July 2017, in application for Ad Hoc's Front-End Software Developer position
+// Submitted: 13 July 2017, in application for Front-End Software Developer position at Ad Hoc
 
 // This file adds the following features to the Household Builder application using only vanilla JavaScript:
   // * Validates data entry (age is required and > 0, relationship is required)
@@ -59,7 +59,6 @@ function onDeleteBtnClick(e){
 //package household data as JSON and send fake request to server
 function onSubmit(e){
   e.preventDefault();
-
   var data = JSON.stringify(household);
   debugEl.innerHTML = data;
   debugEl.style.display = 'block';
@@ -80,7 +79,7 @@ function validateInput(){
   }
 }
 
-//clears all li elements from household ol, and repopulates the list with current household data
+//clears all li elements from household ol, and repopulates the list with current household data with corresponding delete buttons
 function displayHousehold(){
   while (householdListEl.firstChild) {
     householdListEl.removeChild(householdListEl.firstChild);
