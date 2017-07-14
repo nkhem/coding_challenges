@@ -1,10 +1,13 @@
-// In the given index.js file, replace the "Your code goes here" comment with JavaScript that can:
-//
-// * Validate data entry (age is required and > 0, relationship is required)
-// * Add people to a growing household list
-// * Remove a previously added person from the list
-// * Display the household list in the HTML as it is modified
-// * Serialize the household as JSON upon form submission as a fake trip to the server
+// Househould Builder, by Nicole Hemenway
+// Submitted: 13 July 2017, in application for Ad Hoc's Front-End Software Developer position
+
+// This file adds the following features to the Household Builder application using only vanilla JavaScript:
+  // * Validates data entry (age is required and > 0, relationship is required)
+  // * Adds people to a growing household list
+  // * Removes a previously added person from the list
+  // * Display the household list in the HTML as it is modified
+  // * Serialize the household as JSON upon form submission as a fake trip to the server
+
 var household = [];
 var errorMessages = [];
 
@@ -54,7 +57,7 @@ function displayErrorMessages(){
 
 function clearErrorMessages(){
   errorMessages = [];
-  
+
   while (errorsEl.firstChild) {
     errorsEl.removeChild(errorsEl.firstChild);
   }
