@@ -28,7 +28,7 @@ formEl.insertBefore(errorsEl, formEl.childNodes[0]);
 var household = [];
 var errorMessages = [];
 
-//validates input, and if valid, add new member details to hosuehold array
+//validates input and, if valid, add new member details to hosuehold array
 function onAddBtnClick (e){
   e.preventDefault();
 
